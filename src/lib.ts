@@ -17,6 +17,9 @@ import {
 import {
   CanvasRenderer,
 } from 'echarts/renderers';
+import { Bar } from './components/Bar';
+import { Line } from './components/Line';
+import { Pie } from './components/Pie';
 
 echarts.use([
   // chart
@@ -40,6 +43,9 @@ type Trait = Parameters<Registry["registerTrait"]>[0];
 type Module = Parameters<Registry["registerModule"]>[0];
 
 export const components: Component[] = [
+  Bar,
+  Line,
+  Pie
 ];
 export const traits: Trait[] = [];
 export const modules: Module[] = [];
