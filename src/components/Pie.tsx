@@ -13,7 +13,7 @@ const PieStateSchema = Type.Object({});
 
 const PieImpl: ComponentImpl<Static<typeof PiePropsSchema>> = (props) => {
   const { series = [] } = props;
-  const pieSeries = useMemo(() => series.map(series => ({
+  const pieSeries = useMemo<any>(() => series.map(series => ({
     ...series,
     type: 'pie'
   })), [series]);
@@ -40,7 +40,17 @@ const exampleProperties: Static<typeof PiePropsSchema> = {
     data: []
   },
   color: [],
-  series: []
+  series: [],
+  xAxis: [{
+    name: '',
+    type: 'category',
+    data: []
+  }],
+  yAxis: [{
+    name: '',
+    type: 'value',
+    data: []
+  }]
 };
 
 const options = {

@@ -1,4 +1,4 @@
-import { Registry } from "@sunmao-ui/runtime/lib/services/registry";
+import { Registry, SunmaoLib } from '@sunmao-ui/runtime';
 import * as echarts from 'echarts/core';
 import {
   BarChart,
@@ -15,7 +15,7 @@ import {
   AxisPointerComponent
 } from 'echarts/components';
 import {
-  CanvasRenderer,
+  CanvasRenderer
 } from 'echarts/renderers';
 import { Bar } from './components/Bar';
 import { Line } from './components/Line';
@@ -38,9 +38,9 @@ echarts.use([
   CanvasRenderer
 ]);
 
-type Component = Parameters<Registry["registerComponent"]>[0];
-type Trait = Parameters<Registry["registerTrait"]>[0];
-type Module = Parameters<Registry["registerModule"]>[0];
+type Component = Parameters<Registry['registerComponent']>[0];
+type Trait = Parameters<Registry['registerTrait']>[0];
+type Module = Parameters<Registry['registerModule']>[0];
 
 export const components: Component[] = [
   Bar,
@@ -50,7 +50,13 @@ export const components: Component[] = [
 export const traits: Trait[] = [];
 export const modules: Module[] = [];
 
-export function install(registry: Registry) {
+export const EChartsLib: SunmaoLib = {
+  components,
+  traits,
+  modules
+};
+
+export function install (registry: Registry) {
   components.forEach((c) => registry.registerComponent(c));
   traits.forEach((t) => registry.registerTrait(t));
   modules.forEach((m) => registry.registerModule(m));
