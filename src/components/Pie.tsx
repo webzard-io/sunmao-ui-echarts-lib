@@ -49,9 +49,7 @@ const exampleProperties: Static<typeof PiePropsSchema> = {
       name: 'B',
       value: 2
     }]
-  }],
-  xAxis: [],
-  yAxis: []
+  }]
 };
 
 const options = {

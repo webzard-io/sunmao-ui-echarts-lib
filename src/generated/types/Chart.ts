@@ -3,29 +3,17 @@ import { StringUnion } from '../../sunmao-helper';
 
 export const TitleSchema = {
   text: Type.Optional(Type.String()),
-  left: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ])),
-  right: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ])),
-  top: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ])),
-  bottom: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ]))
+  left: Type.Optional(Type.String()),
+  right: Type.Optional(Type.String()),
+  top: Type.Optional(Type.String()),
+  bottom: Type.Optional(Type.String())
 };
 
 export const GridSchema = {
-  left: Type.Optional(Type.Union([Type.String(), Type.Number()])),
-  right: Type.Optional(Type.Union([Type.String(), Type.Number()])),
-  top: Type.Optional(Type.Union([Type.String(), Type.Number()])),
-  bottom: Type.Optional(Type.Union([Type.String(), Type.Number()])),
+  left: Type.Optional(Type.String()),
+  right: Type.Optional(Type.String()),
+  top: Type.Optional(Type.String()),
+  bottom: Type.Optional(Type.String()),
   containLabel: Type.Optional(Type.Boolean())
 };
 
@@ -47,22 +35,10 @@ export const LegendSchema = {
   data: Type.Optional(Type.Array(Type.String())),
   icon: Type.Optional(StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'])),
   type: Type.Optional(StringUnion(['plain', 'scroll'])),
-  left: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ])),
-  right: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ])),
-  top: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ])),
-  bottom: Type.Optional(Type.Union([
-    Type.String(),
-    Type.Number()
-  ]))
+  left: Type.Optional(Type.String()),
+  right: Type.Optional(Type.String()),
+  top: Type.Optional(Type.String()),
+  bottom: Type.Optional(Type.String())
 };
 
 export const SeriesLabelSchema = {
@@ -100,14 +76,14 @@ export const BaseChartSchema = {
   ...ComponentPropsSchema,
   title: Type.Object(TitleSchema),
   grid: Type.Object(GridSchema),
-  xAxis: Type.Array(Type.Object({
+  xAxis: Type.Optional(Type.Array(Type.Object({
     ...AxisSchema,
     position: Type.Optional(StringUnion(['bottom', 'top']))
-  })),
-  yAxis: Type.Array(Type.Object({
+  }))),
+  yAxis: Type.Optional(Type.Array(Type.Object({
     ...AxisSchema,
     position: Type.Optional(StringUnion(['left', 'right']))
-  })),
+  }))),
   tooltip: Type.Object(TooltipSchema),
   legend: Type.Object(LegendSchema),
   color: Type.Optional(Type.Array(Type.String()))
@@ -127,7 +103,7 @@ export const ChartPropsSchema = {
     barCategoryGap: Type.Optional(Type.String()),
     stack: Type.Optional(Type.String()),
     // pie
-    radius: Type.Optional(Type.Union([Type.Number(), Type.String()])),
-    center: Type.Optional(Type.Array(Type.Union([Type.Number(), Type.String()])))
+    radius: Type.Optional(Type.String()),
+    center: Type.Optional(Type.Array(Type.String()))
   }))
 };
