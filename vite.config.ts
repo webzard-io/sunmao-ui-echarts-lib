@@ -1,18 +1,19 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { resolve } from "path";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: 3030,
+    port: 3030
   },
   plugins: [react()],
   build: {
     rollupOptions: {
       input: {
-        index: resolve(__dirname, "index.html"),
-      },
-    },
-  },
+        index: resolve(__dirname, 'index.html'),
+        examples: resolve(__dirname, 'examples.html')
+      }
+    }
+  }
 });
