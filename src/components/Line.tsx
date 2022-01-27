@@ -29,13 +29,13 @@ const LineImpl: ComponentImpl<Static<typeof LinePropsSchema>> = (props) => {
 const exampleProperties: Static<typeof LinePropsSchema> = {
   className: '',
   title: {
-    text: ''
+    text: 'Bar'
   },
   grid: {},
   xAxis: [{
     name: '',
     type: 'category',
-    data: []
+    data: ['Dimension 1', 'Dimension 2']
   }],
   yAxis: [{
     name: '',
@@ -50,7 +50,13 @@ const exampleProperties: Static<typeof LinePropsSchema> = {
     data: []
   },
   color: [],
-  series: []
+  series: [{
+    name: 'Series 1',
+    data: [1, 2]
+  }, {
+    name: 'Series 2',
+    data: [3, 4]
+  }]
 };
 
 const options = {

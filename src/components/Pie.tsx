@@ -29,7 +29,7 @@ const PieImpl: ComponentImpl<Static<typeof PiePropsSchema>> = (props) => {
 const exampleProperties: Static<typeof PiePropsSchema> = {
   className: '',
   title: {
-    text: ''
+    text: 'Pie'
   },
   grid: {},
   tooltip: {
@@ -40,7 +40,16 @@ const exampleProperties: Static<typeof PiePropsSchema> = {
     data: []
   },
   color: [],
-  series: []
+  series: [{
+    name: 'Series 1',
+    data: [{
+      name: 'A',
+      value: 1
+    }, {
+      name: 'B',
+      value: 2
+    }]
+  }]
 };
 
 const options = {
