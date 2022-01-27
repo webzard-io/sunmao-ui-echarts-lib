@@ -1,11 +1,13 @@
 import { Type } from '@sinclair/typebox';
+import { StringUnion } from '../../sunmao-helper';
 import {
   TitleSchema,
   GridSchema,
   TooltipSchema,
   LegendSchema,
   SeriesSchema,
-  ComponentPropsSchema
+  ComponentPropsSchema,
+  AxisSchema
 } from './Chart';
 
 export const PiePropsSchema = {
@@ -23,5 +25,13 @@ export const PiePropsSchema = {
     })),
     radius: Type.Optional(Type.Union([Type.Number(), Type.String()])),
     center: Type.Optional(Type.Array(Type.Union([Type.Number(), Type.String()])))
+  })),
+  xAxis: Type.Array(Type.Object({
+    ...AxisSchema,
+    position: Type.Optional(StringUnion(['bottom', 'top']))
+  })),
+  yAxis: Type.Array(Type.Object({
+    ...AxisSchema,
+    position: Type.Optional(StringUnion(['left', 'right']))
   }))
 };
