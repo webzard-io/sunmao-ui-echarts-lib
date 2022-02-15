@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { initSunmaoUIEditor } from '@sunmao-ui/editor';
+import '@sunmao-ui/editor/dist/esm/index.css';
 import { EChartsLib } from './lib';
 
 const { Editor } = initSunmaoUIEditor({
