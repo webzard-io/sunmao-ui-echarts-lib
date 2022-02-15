@@ -1,18 +1,29 @@
-import { Type } from "@sinclair/typebox";
+import { Type } from '@sinclair/typebox';
 import { StringUnion } from '../../sunmao-helper';
-import {
-  BaseChartSchema,
-  SeriesSchema
-} from './Chart';
+import { BaseChartSchema, SeriesSchema } from './Chart';
 
 export const BarPropsSchema = {
   ...BaseChartSchema,
-  series: Type.Array(Type.Object({
-    ...SeriesSchema,
-    stack: Type.Optional(Type.String()),
-    barWidth: Type.Optional(Type.String()),
-    barGap: Type.Optional(Type.String()),
-    barCategoryGap: Type.Optional(Type.String()),
-    showBackground: Type.Optional(Type.Boolean()),
-  })),
+  series: Type.Array(
+    Type.Object({
+      ...SeriesSchema,
+      stack: Type.String({
+        title: 'Stack'
+      }),
+      barWidth: Type.String({
+        title: 'Bar Width'
+      }),
+      barGap: Type.String({
+        title: 'Bar Gap'
+      }),
+      barCategoryGap: Type.String({
+        title: 'Bar Category Gap'
+      }),
+      showBackground: Type.Boolean({
+        title: 'Show Background'
+      }),
+    }), {
+      category: 'Series'
+    }
+  ),
 };

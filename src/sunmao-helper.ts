@@ -1,28 +1,29 @@
 // move to @sunmao-ui/runtime in the future?
 
-import { ComponentMetadata } from "@sunmao-ui/core/lib/metadata";
-import { ComponentImplProps } from "@sunmao-ui/runtime";
-import { TLiteral, Type } from "@sinclair/typebox";
+import { ComponentMetadata } from '@sunmao-ui/core/lib/metadata';
+import { ComponentImplProps } from '@sunmao-ui/runtime';
+import { TLiteral, Type } from '@sinclair/typebox';
 
 export type IntoStringUnion<T> = {
   [K in keyof T]: T[K] extends string ? TLiteral<T[K]> : never;
 };
 
-export function StringUnion<T extends string[]>(values: [...T]) {
+export function StringUnion<T extends string[]> (values: [...T], options: Record<string, any>) {
   return Type.KeyOf(
     Type.Object(
       values.reduce((prev, cur) => {
         prev[cur] = Type.Boolean();
         return prev;
       }, {} as Record<T[number], any>)
-    )
+    ),
+    options
   );
 }
 
 export const FALLBACK_METADATA: ComponentMetadata = {
-  name: "",
-  description: "",
-  displayName: "",
+  name: '',
+  description: '',
+  displayName: '',
   isDraggable: true,
   isResizable: true,
   exampleProperties: {},
@@ -37,8 +38,8 @@ export const getComponentProps = <
   KStyleSlot extends string,
   KEvent extends string
 >(
-  props: T & ComponentImplProps<TState, TMethods, KSlot, KStyleSlot, KEvent>
-): T => {
+    props: T & ComponentImplProps<TState, TMethods, KSlot, KStyleSlot, KEvent>
+  ): T => {
   const {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     component,
@@ -47,7 +48,6 @@ export const getComponentProps = <
     services,
     app,
     gridCallbacks,
-    componentWrapper,
     data,
     customStyle,
     callbackMap,

@@ -7,7 +7,6 @@ import { useMemo } from 'react';
 
 const LinePropsSchema = Type.Object({
   ...BaseLinePropsSchema,
-  className: Type.Optional(Type.String())
 });
 const LineStateSchema = Type.Object({});
 
@@ -27,35 +26,74 @@ const LineImpl: ComponentImpl<Static<typeof LinePropsSchema>> = (props) => {
 };
 
 const exampleProperties: Static<typeof LinePropsSchema> = {
-  className: '',
+  notMerge: false,
+  lazyUpdate: false,
+  showLoading: false,
   title: {
-    text: 'Bar'
+    text: 'Line',
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
   },
-  grid: {},
+  grid: {
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
+    containLabel: true
+  },
   xAxis: [{
     name: '',
     type: 'category',
-    data: ['Dimension 1', 'Dimension 2']
+    data: ['Dimension 1', 'Dimension 2'],
+    nameLocation: 'center',
+    offset: 0,
+    position: 'bottom'
   }],
   yAxis: [{
     name: '',
     type: 'value',
-    data: []
+    data: [],
+    nameLocation: 'center',
+    offset: 0,
+    position: 'left'
   }],
   tooltip: {
-    trigger: 'axis'
+    trigger: 'axis',
+    triggerOn: 'mousemove'
   },
   legend: {
     show: true,
-    data: []
+    data: [],
+    type: 'scroll',
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
+    icon: 'auto'
   },
   color: [],
   series: [{
     name: 'Series 1',
-    data: [1, 2]
+    label: {
+      show: false,
+      position: 'top',
+    },
+    data: [1, 2],
+    symbol: 'circle',
+    showSymbol: true,
+    smooth: true
   }, {
     name: 'Series 2',
-    data: [3, 4]
+    label: {
+      show: false,
+      position: 'top',
+    },
+    data: [3, 4],
+    symbol: 'circle',
+    showSymbol: true,
+    smooth: true
   }]
 };
 
@@ -65,7 +103,10 @@ const options = {
     ...FALLBACK_METADATA,
     name: 'line',
     displayName: 'Line',
-    exampleProperties
+    exampleProperties,
+    annotations: {
+      category: 'Chart',
+    },
   },
   spec: {
     properties: LinePropsSchema,

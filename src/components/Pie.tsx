@@ -7,7 +7,6 @@ import { useMemo } from 'react';
 
 const PiePropsSchema = Type.Object({
   ...BasePiePropsSchema,
-  className: Type.Optional(Type.String())
 });
 const PieStateSchema = Type.Object({});
 
@@ -27,24 +26,49 @@ const PieImpl: ComponentImpl<Static<typeof PiePropsSchema>> = (props) => {
 };
 
 const exampleProperties: Static<typeof PiePropsSchema> = {
-  className: '',
+  notMerge: false,
+  lazyUpdate: false,
+  showLoading: false,
   title: {
-    text: 'Pie'
+    text: 'Pie',
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
   },
-  grid: {},
+  grid: {
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
+    containLabel: true
+  },
   tooltip: {
-    trigger: 'item'
+    trigger: 'item',
+    triggerOn: 'mousemove',
   },
   legend: {
     show: true,
-    data: []
+    data: [],
+    type: 'scroll',
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
+    icon: 'auto'
   },
   color: [],
   series: [{
     name: 'Series 1',
+    label: {
+      show: false,
+      position: 'inside',
+    },
+    center: [],
+    radius: '',
     data: [{
       name: 'A',
-      value: 1
+      value: 1,
     }, {
       name: 'B',
       value: 2
@@ -58,7 +82,10 @@ const options = {
     ...FALLBACK_METADATA,
     name: 'pie',
     displayName: 'Pie',
-    exampleProperties
+    exampleProperties,
+    annotations: {
+      category: 'Chart',
+    },
   },
   spec: {
     properties: PiePropsSchema,

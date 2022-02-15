@@ -10,11 +10,10 @@ import { filterProperties } from '../utils/object';
 
 const ChartPropsSchema = Type.Object({
   ...BaseChartPropsSchema,
-  className: Type.Optional(Type.String())
 });
 const ChartStateSchema = Type.Object({});
 
-export const ChartImpl: ComponentImpl<Static<typeof ChartPropsSchema>> = (props) => {
+export const ChartImpl: ComponentImpl<any> = (props) => {
   const { customStyle, callbackMap } = props;
   const {
     className,
@@ -76,26 +75,52 @@ export const ChartImpl: ComponentImpl<Static<typeof ChartPropsSchema>> = (props)
 };
 
 const exampleProperties: Static<typeof ChartPropsSchema> = {
-  className: '',
+  notMerge: false,
+  lazyUpdate: false,
+  showLoading: false,
   title: {
-    text: ''
+    text: 'Chart',
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
   },
-  grid: {},
+  grid: {
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
+    containLabel: true
+  },
   xAxis: [{
     name: '',
     type: 'category',
-    data: []
+    data: [],
+    nameLocation: 'center',
+    offset: 0,
+    position: 'bottom'
   }],
   yAxis: [{
     name: '',
-    type: 'value'
+    type: 'value',
+    data: [],
+    nameLocation: 'center',
+    offset: 0,
+    position: 'left'
   }],
   tooltip: {
-    trigger: 'axis'
+    trigger: 'axis',
+    triggerOn: 'mousemove'
   },
   legend: {
     show: true,
-    data: []
+    data: [],
+    type: 'scroll',
+    left: '',
+    right: '',
+    top: '',
+    bottom: '',
+    icon: 'auto'
   },
   color: [],
   series: []
@@ -107,7 +132,10 @@ const options = {
     ...FALLBACK_METADATA,
     name: 'chart',
     displayName: 'Chart',
-    exampleProperties
+    exampleProperties,
+    annotations: {
+      category: 'Chart',
+    },
   },
   spec: {
     properties: ChartPropsSchema,

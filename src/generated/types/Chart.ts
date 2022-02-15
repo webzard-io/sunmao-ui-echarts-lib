@@ -2,48 +2,98 @@ import { Type } from '@sinclair/typebox';
 import { StringUnion } from '../../sunmao-helper';
 
 export const TitleSchema = {
-  text: Type.Optional(Type.String()),
-  left: Type.Optional(Type.String()),
-  right: Type.Optional(Type.String()),
-  top: Type.Optional(Type.String()),
-  bottom: Type.Optional(Type.String())
+  text: Type.String({
+    title: 'Text'
+  }),
+  left: Type.String({
+    title: 'Left'
+  }),
+  right: Type.String({
+    title: 'Right'
+  }),
+  top: Type.String({
+    title: 'Top'
+  }),
+  bottom: Type.String({
+    title: 'Bottom'
+  })
 };
 
 export const GridSchema = {
-  left: Type.Optional(Type.String()),
-  right: Type.Optional(Type.String()),
-  top: Type.Optional(Type.String()),
-  bottom: Type.Optional(Type.String()),
-  containLabel: Type.Optional(Type.Boolean())
+  left: Type.String({
+    title: 'Left'
+  }),
+  right: Type.String({
+    title: 'Right'
+  }),
+  top: Type.String({
+    title: 'Top'
+  }),
+  bottom: Type.String({
+    title: 'Bottom'
+  }),
+  containLabel: Type.Boolean({
+    title: 'Should Contain Label'
+  })
 };
 
 export const AxisSchema = {
-  name: Type.Optional(Type.String()),
-  nameLocation: Type.Optional(StringUnion(['end', 'start', 'center'])),
-  type: StringUnion(['value', 'category']),
-  offset: Type.Optional(Type.Number()),
-  data: Type.Optional(Type.Array(Type.String()))
+  name: Type.String({
+    title: 'Name'
+  }),
+  nameLocation: StringUnion(['end', 'start', 'center'], {
+    title: 'Name Location'
+  }),
+  type: StringUnion(['value', 'category'], {
+    title: 'Type'
+  }),
+  offset: Type.Number({
+    title: 'Offset'
+  }),
+  data: Type.Array(Type.String(), {
+    title: 'Data'
+  })
 };
 
 export const TooltipSchema = {
-  trigger: StringUnion(['axis', 'item', 'none']),
-  triggerOn: Type.Optional(StringUnion(['mousemove', 'click', 'mousemove|click', 'none']))
+  trigger: StringUnion(['axis', 'item', 'none'], {
+    title: 'Trigger'
+  }),
+  triggerOn: StringUnion(['mousemove', 'click', 'mousemove|click', 'none'], {
+    title: 'Trigger Way'
+  })
 };
 
 export const LegendSchema = {
-  show: Type.Boolean(),
-  data: Type.Optional(Type.Array(Type.String())),
-  icon: Type.Optional(StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'])),
-  type: Type.Optional(StringUnion(['plain', 'scroll'])),
-  left: Type.Optional(Type.String()),
-  right: Type.Optional(Type.String()),
-  top: Type.Optional(Type.String()),
-  bottom: Type.Optional(Type.String())
+  show: Type.Boolean({
+    title: 'Show'
+  }),
+  data: Type.Array(Type.String(), {
+    title: 'Data'
+  }),
+  icon: StringUnion(['auto', 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
+    title: 'Icon'
+  }),
+  type: StringUnion(['plain', 'scroll'], {
+    title: 'Type'
+  }),
+  left: Type.String({
+    title: 'Left'
+  }),
+  right: Type.String({
+    title: 'Right'
+  }),
+  top: Type.String({
+    title: 'Top'
+  }),
+  bottom: Type.String({
+    title: 'Bottom'
+  })
 };
 
 export const SeriesLabelSchema = {
   show: Type.Boolean(),
-  position: Type.Optional(StringUnion([
+  position: StringUnion([
     'top',
     'left',
     'right',
@@ -57,36 +107,71 @@ export const SeriesLabelSchema = {
     'insideBottomLeft',
     'insideTopRight',
     'insideBottomRight'
-  ]))
+  ], {
+    title: 'Position'
+  })
 };
 
 export const SeriesSchema = {
-  name: Type.Optional(Type.String()),
-  label: Type.Optional(Type.Object(SeriesLabelSchema)),
-  data: Type.Array(Type.Number())
+  name: Type.String({
+    title: 'Name'
+  }),
+  label: Type.Object(SeriesLabelSchema, {
+    title: 'Label'
+  }),
+  data: Type.Array(Type.Number(), {
+    title: 'Data'
+  })
 };
 
 export const ComponentPropsSchema = {
-  notMerge: Type.Optional(Type.Boolean()),
-  lazyUpdate: Type.Optional(Type.Boolean()),
-  showLoading: Type.Optional(Type.Boolean())
+  notMerge: Type.Boolean({
+    title: 'Not Merge Option',
+    category: 'Basic'
+  }),
+  lazyUpdate: Type.Boolean({
+    title: 'Enable Lazy Update',
+    category: 'Basic'
+  }),
+  showLoading: Type.Boolean({
+    title: 'Loading',
+    category: 'Basic'
+  })
 };
 
 export const BaseChartSchema = {
   ...ComponentPropsSchema,
-  title: Type.Object(TitleSchema),
-  grid: Type.Object(GridSchema),
-  xAxis: Type.Optional(Type.Array(Type.Object({
+  title: Type.Object(TitleSchema, {
+    category: 'Title'
+  }),
+  grid: Type.Object(GridSchema, {
+    category: 'Grid'
+  }),
+  xAxis: Type.Array(Type.Object({
     ...AxisSchema,
-    position: Type.Optional(StringUnion(['bottom', 'top']))
-  }))),
-  yAxis: Type.Optional(Type.Array(Type.Object({
+    position: StringUnion(['bottom', 'top'], {
+      title: 'Position'
+    })
+  }), {
+    category: 'XAxis'
+  }),
+  yAxis: Type.Array(Type.Object({
     ...AxisSchema,
-    position: Type.Optional(StringUnion(['left', 'right']))
-  }))),
-  tooltip: Type.Object(TooltipSchema),
-  legend: Type.Object(LegendSchema),
-  color: Type.Optional(Type.Array(Type.String()))
+    position: StringUnion(['left', 'right'], {
+      title: 'Position'
+    })
+  }), {
+    category: 'YAxis'
+  }),
+  tooltip: Type.Object(TooltipSchema, {
+    category: 'Tooltip'
+  }),
+  legend: Type.Object(LegendSchema, {
+    category: 'Legend'
+  }),
+  color: Type.Array(Type.String(), {
+    category: 'Color'
+  })
 };
 
 export const ChartPropsSchema = {
@@ -94,16 +179,34 @@ export const ChartPropsSchema = {
   series: Type.Array(Type.Object({
     ...SeriesSchema,
     // line
-    symbol: Type.Optional(StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'])),
-    showSymbol: Type.Optional(Type.Boolean()),
-    smooth: Type.Optional(Type.Boolean()),
+    symbol: StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
+      title: 'Symbol'
+    }),
+    showSymbol: Type.Boolean({
+      title: 'Show Symbol'
+    }),
+    smooth: Type.Boolean({
+      title: 'Smooth'
+    }),
     // bar
-    barWidth: Type.Optional(Type.String()),
-    barGap: Type.Optional(Type.String()),
-    barCategoryGap: Type.Optional(Type.String()),
-    stack: Type.Optional(Type.String()),
+    barWidth: Type.String({
+      title: 'Bar Width'
+    }),
+    barGap: Type.String({
+      title: 'Bar Gap'
+    }),
+    barCategoryGap: Type.String({
+      title: 'Bar Category Gap'
+    }),
+    stack: Type.String({
+      title: 'Stack',
+    }),
     // pie
-    radius: Type.Optional(Type.String()),
-    center: Type.Optional(Type.Array(Type.String()))
+    radius: Type.String({
+      title: 'Radius'
+    }),
+    center: Type.Array(Type.String(), {
+      title: 'Center'
+    })
   }))
 };
