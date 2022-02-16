@@ -1,4 +1,4 @@
-import { Type } from "@sinclair/typebox";
+import { Type } from '@sinclair/typebox';
 import { StringUnion } from '../../sunmao-helper';
 import {
   BaseChartSchema,
@@ -9,8 +9,14 @@ export const LinePropsSchema = {
   ...BaseChartSchema,
   series: Type.Array(Type.Object({
     ...SeriesSchema,
-    symbol: Type.Optional(StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'])),
-    showSymbol: Type.Optional(Type.Boolean()),
-    smooth: Type.Optional(Type.Boolean()),
+    symbol: StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
+      title: 'Symbol'
+    }),
+    showSymbol: Type.Boolean({
+      title: 'Show Symbol'
+    }),
+    smooth: Type.Boolean({
+      title: 'Smooth'
+    }),
   }))
 };

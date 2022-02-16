@@ -22,8 +22,14 @@ export const PiePropsSchema = {
     data: Type.Array(Type.Object({
       value: Type.Number(),
       name: Type.String()
-    })),
-    radius: Type.Optional(Type.Union([Type.Number(), Type.String()])),
-    center: Type.Optional(Type.Array(Type.Union([Type.Number(), Type.String()])))
+    }), {
+      title: 'Data'
+    }),
+    radius: Type.Union([Type.Number(), Type.String()], {
+      title: 'Radius'
+    }),
+    center: Type.Array(Type.Union([Type.Number(), Type.String()]), {
+      title: 'Center'
+    })
   }))
 };

@@ -1,25 +1,26 @@
-import renderApp from "@sunmao-ui/editor";
-import { components, traits, modules } from "./lib";
-import '@sunmao-ui/editor/dist/esm/main.css';
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom';
+import { initSunmaoUIEditor } from '@sunmao-ui/editor';
+import '@sunmao-ui/editor/dist/esm/index.css';
+import { EChartsLib } from './lib';
 
-((window as unknown) as { resetApp: Function }).resetApp = () => {
-  localStorage.setItem(
-    "schema",
-    JSON.stringify({
-      kind: "Application",
-      version: "echarts/v1",
-      metadata: {
-        name: "scf",
-      },
-      spec: {
-        components: [],
-      },
-    })
-  );
-};
-
-renderApp({
-  components,
-  traits,
-  modules,
+const { Editor } = initSunmaoUIEditor({
+  libs: [EChartsLib],
+  defaultApplication: {
+    kind: 'Application',
+    version: 'echarts/v1',
+    metadata: {
+      name: 'echarts',
+    },
+    spec: {
+      components: [],
+    },
+  },
 });
+
+ReactDOM.render(
+  <StrictMode>
+    <Editor />
+  </StrictMode>,
+  document.getElementById('root')
+);
