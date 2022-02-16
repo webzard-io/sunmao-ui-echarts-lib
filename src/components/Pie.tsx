@@ -55,7 +55,6 @@ const exampleProperties: Static<typeof PiePropsSchema> = {
     right: '',
     top: '',
     bottom: '',
-    icon: 'auto'
   },
   color: [],
   series: [{
@@ -64,8 +63,6 @@ const exampleProperties: Static<typeof PiePropsSchema> = {
       show: false,
       position: 'inside',
     },
-    center: [],
-    radius: '',
     data: [{
       name: 'A',
       value: 1,

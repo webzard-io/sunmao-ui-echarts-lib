@@ -71,7 +71,6 @@ const exampleProperties: Static<typeof LinePropsSchema> = {
     right: '',
     top: '',
     bottom: '',
-    icon: 'auto'
   },
   color: [],
   series: [{

@@ -70,7 +70,6 @@ const exampleProperties: Static<typeof BarPropsSchema> = {
     right: '',
     top: '',
     bottom: '',
-    icon: 'auto'
   },
   color: [],
   series: [{
