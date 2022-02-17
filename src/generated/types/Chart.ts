@@ -71,9 +71,9 @@ export const LegendSchema = {
   data: Type.Array(Type.String(), {
     title: 'Data'
   }),
-  icon: StringUnion(['auto', 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
+  icon: Type.Optional(StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
     title: 'Icon'
-  }),
+  })),
   type: StringUnion(['plain', 'scroll'], {
     title: 'Type'
   }),
@@ -208,5 +208,8 @@ export const ChartPropsSchema = {
     center: Type.Array(Type.String(), {
       title: 'Center'
     })
-  }))
+  }), {
+    title: 'Series',
+    category: 'Series'
+  })
 };

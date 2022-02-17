@@ -23,6 +23,7 @@ export const BarPropsSchema = {
         title: 'Show Background'
       }),
     }), {
+      title: 'Series',
       category: 'Series'
     }
   ),

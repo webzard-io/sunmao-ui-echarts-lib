@@ -18,5 +18,8 @@ export const LinePropsSchema = {
     smooth: Type.Boolean({
       title: 'Smooth'
     }),
-  }))
+  }), {
+    title: 'Series',
+    category: 'Series'
+  })
 };

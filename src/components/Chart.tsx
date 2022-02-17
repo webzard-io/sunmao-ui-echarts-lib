@@ -13,8 +13,8 @@ const ChartPropsSchema = Type.Object({
 });
 const ChartStateSchema = Type.Object({});
 
-export const ChartImpl: ComponentImpl<any> = (props) => {
-  const { customStyle, callbackMap } = props;
+export const ChartImpl: ComponentImpl<any> = props => {
+  const { elementRef, customStyle, callbackMap } = props;
   const {
     className,
     title,
@@ -28,49 +28,53 @@ export const ChartImpl: ComponentImpl<any> = (props) => {
     ...cProps
   } = getComponentProps(props);
   const option = useMemo(() => {
-    return filterProperties({
-      title,
-      grid,
-      yAxis,
-      xAxis,
-      legend,
-      tooltip,
-      color,
-      series
-    },
-    (option, key, path) => {
-      const value = option[key];
+    return filterProperties(
+      {
+        title,
+        grid,
+        yAxis,
+        xAxis,
+        legend,
+        tooltip,
+        color,
+        series,
+      },
+      (option, key, path) => {
+        const value = option[key];
 
-      if (value !== undefined && value !== '') {
-        const strPath = path.join('.');
-        const checkedEmptyArrayProperties = ['color', 'legend.data'];
+        if (value !== undefined && value !== '') {
+          const strPath = path.join('.');
+          const checkedEmptyArrayProperties = ['color', 'legend.data'];
 
-        if (checkedEmptyArrayProperties.includes(strPath) && Array.isArray(value)) {
-          return value.length !== 0;
-        } else {
-          return true;
+          if (checkedEmptyArrayProperties.includes(strPath) && Array.isArray(value)) {
+            return value.length !== 0;
+          } else {
+            return true;
+          }
         }
-      }
 
-      return false;
-    },
-    { deep: true });
+        return false;
+      },
+      { deep: true }
+    );
   }, [title, grid, yAxis, xAxis, legend, tooltip, color, series]);
   const onClick = () => {
     callbackMap?.onClick?.();
   };
   const events = {
-    click: onClick
+    click: onClick,
   };
 
   return (
-    <ReactEChartsCore
-      {...cProps}
-      className={cx(className, css(customStyle?.wrapper))}
-      echarts={echarts}
-      onEvents={events}
-      option={option}
-     />
+    <div ref={elementRef}>
+      <ReactEChartsCore
+        {...cProps}
+        className={cx(className, css(customStyle?.wrapper))}
+        echarts={echarts}
+        onEvents={events}
+        option={option}
+      />
+    </div>
   );
 };
 
@@ -90,27 +94,31 @@ const exampleProperties: Static<typeof ChartPropsSchema> = {
     right: '',
     top: '',
     bottom: '',
-    containLabel: true
+    containLabel: true,
   },
-  xAxis: [{
-    name: '',
-    type: 'category',
-    data: [],
-    nameLocation: 'center',
-    offset: 0,
-    position: 'bottom'
-  }],
-  yAxis: [{
-    name: '',
-    type: 'value',
-    data: [],
-    nameLocation: 'center',
-    offset: 0,
-    position: 'left'
-  }],
+  xAxis: [
+    {
+      name: '',
+      type: 'category',
+      data: [],
+      nameLocation: 'center',
+      offset: 0,
+      position: 'bottom',
+    },
+  ],
+  yAxis: [
+    {
+      name: '',
+      type: 'value',
+      data: [],
+      nameLocation: 'center',
+      offset: 0,
+      position: 'left',
+    },
+  ],
   tooltip: {
     trigger: 'axis',
-    triggerOn: 'mousemove'
+    triggerOn: 'mousemove',
   },
   legend: {
     show: true,
@@ -120,10 +128,9 @@ const exampleProperties: Static<typeof ChartPropsSchema> = {
     right: '',
     top: '',
     bottom: '',
-    icon: 'auto'
   },
   color: [],
-  series: []
+  series: [],
 };
 
 const options = {
@@ -143,8 +150,8 @@ const options = {
     methods: {},
     slots: [],
     styleSlots: ['wrapper'],
-    events: ['onClick']
-  }
+    events: ['onClick'],
+  },
 };
 
 export const Chart = implementRuntimeComponent(options)(ChartImpl);

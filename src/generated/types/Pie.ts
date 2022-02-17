@@ -1,5 +1,4 @@
 import { Type } from '@sinclair/typebox';
-import { StringUnion } from '../../sunmao-helper';
 import {
   TitleSchema,
   GridSchema,
@@ -7,16 +6,25 @@ import {
   LegendSchema,
   SeriesSchema,
   ComponentPropsSchema,
-  AxisSchema
 } from './Chart';
 
 export const PiePropsSchema = {
   ...ComponentPropsSchema,
-  title: Type.Object(TitleSchema),
-  grid: Type.Object(GridSchema),
-  tooltip: Type.Object(TooltipSchema),
-  legend: Type.Object(LegendSchema),
-  color: Type.Optional(Type.Array(Type.String())),
+  title: Type.Object(TitleSchema, {
+    category: 'Title',
+  }),
+  grid: Type.Object(GridSchema, {
+    category: 'Grid',
+  }),
+  tooltip: Type.Object(TooltipSchema, {
+    category: 'Tooltip',
+  }),
+  legend: Type.Object(LegendSchema, {
+    category: 'Legend',
+  }),
+  color: Type.Optional(Type.Array(Type.String(), {
+    category: 'Color',
+  })),
   series: Type.Array(Type.Object({
     ...SeriesSchema,
     data: Type.Array(Type.Object({
@@ -25,11 +33,14 @@ export const PiePropsSchema = {
     }), {
       title: 'Data'
     }),
-    radius: Type.Union([Type.Number(), Type.String()], {
+    radius: Type.Optional(Type.Union([Type.Number(), Type.String()], {
       title: 'Radius'
-    }),
-    center: Type.Array(Type.Union([Type.Number(), Type.String()]), {
+    })),
+    center: Type.Optional(Type.Array(Type.Union([Type.Number(), Type.String()]), {
       title: 'Center'
-    })
-  }))
+    }))
+  }), {
+    title: 'Series',
+    category: 'Series'
+  })
 };
