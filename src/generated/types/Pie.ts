@@ -40,6 +40,7 @@ export const PiePropsSchema = {
       title: 'Center'
     }))
   }), {
+    title: 'Series',
     category: 'Series'
   })
 };

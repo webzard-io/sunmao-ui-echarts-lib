@@ -19,6 +19,7 @@ export const LinePropsSchema = {
       title: 'Smooth'
     }),
   }), {
+    title: 'Series',
     category: 'Series'
   })
 };

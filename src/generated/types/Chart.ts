@@ -208,5 +208,8 @@ export const ChartPropsSchema = {
     center: Type.Array(Type.String(), {
       title: 'Center'
     })
-  }))
+  }), {
+    title: 'Series',
+    category: 'Series'
+  })
 };
