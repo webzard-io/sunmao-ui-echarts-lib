@@ -100,7 +100,7 @@ const exampleProperties: Static<typeof ChartPropsSchema> = {
     {
       name: '',
       type: 'category',
-      data: [],
+      data: ['Dimension 1', 'Dimension 2'],
       nameLocation: 'center',
       offset: 0,
       position: 'bottom',
@@ -130,7 +130,34 @@ const exampleProperties: Static<typeof ChartPropsSchema> = {
     bottom: '',
   },
   color: [],
-  series: [],
+  series: [
+    {
+      type: 'line',
+      name: 'Series 1',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [1, 2],
+      symbol: 'circle',
+      showSymbol: true,
+      smooth: true,
+    },
+    {
+      type: 'bar',
+      name: 'Series 2',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [1, 2],
+      barWidth: '',
+      barGap: '',
+      barCategoryGap: '',
+      stack: '',
+      showBackground: false,
+    },
+  ],
 };
 
 const options = {

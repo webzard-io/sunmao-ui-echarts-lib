@@ -1,25 +1,20 @@
 import { Type } from '@sinclair/typebox';
-import { StringUnion } from '../../sunmao-helper';
-import {
-  BaseChartSchema,
-  SeriesSchema
-} from './Chart';
+import { BaseChartSchema, SeriesSchema, LineSchemaObject } from './Chart';
 
 export const LinePropsSchema = {
   ...BaseChartSchema,
-  series: Type.Array(Type.Object({
-    ...SeriesSchema,
-    symbol: StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
-      title: 'Symbol'
+  series: Type.Array(
+    Type.Object({
+      ...SeriesSchema,
+      ...LineSchemaObject,
     }),
-    showSymbol: Type.Boolean({
-      title: 'Show Symbol'
-    }),
-    smooth: Type.Boolean({
-      title: 'Smooth'
-    }),
-  }), {
-    title: 'Series',
-    category: 'Series'
-  })
+    {
+      title: 'Series',
+      category: 'Series',
+      widget: 'core/v1/array',
+      widgetOptions: {
+        displayedKeys: ['name'],
+      },
+    }
+  ),
 };
