@@ -1,26 +1,26 @@
 import { Type } from '@sinclair/typebox';
 import {
-  TitleSchema,
-  GridSchema,
-  TooltipSchema,
-  LegendSchema,
-  SeriesSchema,
-  ComponentPropsSchema,
-  PieSchemaObject,
+  TitleSpec,
+  GridSpec,
+  TooltipSpec,
+  LegendSpec,
+  SeriesSpec,
+  ComponentPropsSpec,
+  PieSpecObject,
 } from './Chart';
 
-export const PiePropsSchema = {
-  ...ComponentPropsSchema,
-  title: Type.Object(TitleSchema, {
+export const PiePropsSpec = {
+  ...ComponentPropsSpec,
+  title: Type.Object(TitleSpec, {
     category: 'Title',
   }),
-  grid: Type.Object(GridSchema, {
+  grid: Type.Object(GridSpec, {
     category: 'Grid',
   }),
-  tooltip: Type.Object(TooltipSchema, {
+  tooltip: Type.Object(TooltipSpec, {
     category: 'Tooltip',
   }),
-  legend: Type.Object(LegendSchema, {
+  legend: Type.Object(LegendSpec, {
     category: 'Legend',
   }),
   color: Type.Optional(
@@ -30,8 +30,8 @@ export const PiePropsSchema = {
   ),
   series: Type.Array(
     Type.Object({
-      ...SeriesSchema,
-      ...PieSchemaObject,
+      ...SeriesSpec,
+      ...PieSpecObject,
     }),
     {
       title: 'Series',

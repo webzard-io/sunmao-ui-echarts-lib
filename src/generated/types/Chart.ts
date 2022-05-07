@@ -1,7 +1,7 @@
 import { Type, TOptional, TSchema } from '@sinclair/typebox';
 import { StringUnion } from '../../sunmao-helper';
 
-export const TitleSchema = {
+export const TitleSpec = {
   text: Type.String({
     title: 'Text',
   }),
@@ -19,7 +19,7 @@ export const TitleSchema = {
   }),
 };
 
-export const GridSchema = {
+export const GridSpec = {
   left: Type.String({
     title: 'Left',
   }),
@@ -37,7 +37,7 @@ export const GridSchema = {
   }),
 };
 
-export const AxisSchema = {
+export const AxisSpec = {
   name: Type.String({
     title: 'Name',
   }),
@@ -55,7 +55,7 @@ export const AxisSchema = {
   }),
 };
 
-export const TooltipSchema = {
+export const TooltipSpec = {
   trigger: StringUnion(['axis', 'item', 'none'], {
     title: 'Trigger',
   }),
@@ -64,7 +64,7 @@ export const TooltipSchema = {
   }),
 };
 
-export const LegendSchema = {
+export const LegendSpec = {
   show: Type.Boolean({
     title: 'Show',
   }),
@@ -96,7 +96,7 @@ export const LegendSchema = {
   }),
 };
 
-export const SeriesLabelSchema = {
+export const SeriesLabelSpec = {
   show: Type.Boolean(),
   position: StringUnion(
     [
@@ -120,11 +120,11 @@ export const SeriesLabelSchema = {
   ),
 };
 
-export const SeriesSchema = {
+export const SeriesSpec = {
   name: Type.String({
     title: 'Name',
   }),
-  label: Type.Object(SeriesLabelSchema, {
+  label: Type.Object(SeriesLabelSpec, {
     title: 'Label',
   }),
   data: Type.Array(Type.Number(), {
@@ -132,7 +132,7 @@ export const SeriesSchema = {
   }),
 };
 
-export const ComponentPropsSchema = {
+export const ComponentPropsSpec = {
   notMerge: Type.Boolean({
     title: 'Not Merge Option',
     category: 'Basic',
@@ -147,17 +147,17 @@ export const ComponentPropsSchema = {
   }),
 };
 
-export const BaseChartSchema = {
-  ...ComponentPropsSchema,
-  title: Type.Object(TitleSchema, {
+export const BaseChartSpec = {
+  ...ComponentPropsSpec,
+  title: Type.Object(TitleSpec, {
     category: 'Title',
   }),
-  grid: Type.Object(GridSchema, {
+  grid: Type.Object(GridSpec, {
     category: 'Grid',
   }),
   xAxis: Type.Array(
     Type.Object({
-      ...AxisSchema,
+      ...AxisSpec,
       position: StringUnion(['bottom', 'top'], {
         title: 'Position',
       }),
@@ -168,7 +168,7 @@ export const BaseChartSchema = {
   ),
   yAxis: Type.Array(
     Type.Object({
-      ...AxisSchema,
+      ...AxisSpec,
       position: StringUnion(['left', 'right'], {
         title: 'Position',
       }),
@@ -177,10 +177,10 @@ export const BaseChartSchema = {
       category: 'YAxis',
     }
   ),
-  tooltip: Type.Object(TooltipSchema, {
+  tooltip: Type.Object(TooltipSpec, {
     category: 'Tooltip',
   }),
-  legend: Type.Object(LegendSchema, {
+  legend: Type.Object(LegendSpec, {
     category: 'Legend',
   }),
   color: Type.Array(Type.String(), {
@@ -188,7 +188,51 @@ export const BaseChartSchema = {
   }),
 };
 
-export const PieSchemaObject = {
+const LineConditions = [
+  {
+    key: 'type',
+    value: 'line',
+  },
+];
+const BarConditions = [
+  {
+    key: 'type',
+    value: 'bar',
+  },
+];
+
+export const LineSpecObject = {
+  symbol: StringUnion(
+    ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'],
+    {
+      title: 'Symbol',
+    }
+  ),
+  showSymbol: Type.Boolean({
+    title: 'Show Symbol',
+  }),
+  smooth: Type.Boolean({
+    title: 'Smooth',
+  }),
+};
+export const BarSpecObject = {
+  stack: Type.String({
+    title: 'Stack',
+  }),
+  barWidth: Type.String({
+    title: 'Bar Width',
+  }),
+  barGap: Type.String({
+    title: 'Bar Gap',
+  }),
+  barCategoryGap: Type.String({
+    title: 'Bar Category Gap',
+  }),
+  showBackground: Type.Boolean({
+    title: 'Show Background',
+  }),
+};
+export const PieSpecObject = {
   data: Type.Array(
     Type.Object({
       value: Type.Number(),
@@ -210,81 +254,36 @@ export const PieSchemaObject = {
   ),
 };
 
-const LineConditions = [
-  {
-    key: 'type',
-    value: 'line',
-  },
-];
-const BarConditions = [
-  {
-    key: 'type',
-    value: 'bar',
-  },
-];
-
-export const LineSchemaObject = {
-  symbol: StringUnion(
-    ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'],
-    {
-      title: 'Symbol',
-    }
-  ),
-  showSymbol: Type.Boolean({
-    title: 'Show Symbol',
-  }),
-  smooth: Type.Boolean({
-    title: 'Smooth',
-  }),
-};
-export const BarSchemaObject = {
-  stack: Type.String({
-    title: 'Stack',
-  }),
-  barWidth: Type.String({
-    title: 'Bar Width',
-  }),
-  barGap: Type.String({
-    title: 'Bar Gap',
-  }),
-  barCategoryGap: Type.String({
-    title: 'Bar Category Gap',
-  }),
-  showBackground: Type.Boolean({
-    title: 'Show Background',
-  }),
-};
-
 type Optional<T extends Record<string, TSchema>> = {
   [P in keyof T]: TOptional<T[P]>;
 };
 
-export const ChartPropsSchema = {
-  ...BaseChartSchema,
+export const ChartPropsSpec = {
+  ...BaseChartSpec,
   series: Type.Array(
     Type.Object({
       type: StringUnion(['line', 'bar'], {
         title: 'Type',
       }),
-      ...SeriesSchema,
+      ...SeriesSpec,
       // line
-      ...(Object.keys(LineSchemaObject).reduce((result, key) => {
+      ...(Object.keys(LineSpecObject).reduce((result, key) => {
         result[key] = Type.Optional({
-          ...LineSchemaObject[key as keyof typeof LineSchemaObject],
+          ...LineSpecObject[key as keyof typeof LineSpecObject],
           conditions: LineConditions,
         });
 
         return result;
-      }, {} as Record<string, any>) as Optional<typeof LineSchemaObject>),
+      }, {} as Record<string, any>) as Optional<typeof LineSpecObject>),
       // bar
-      ...(Object.keys(BarSchemaObject).reduce((result, key) => {
+      ...(Object.keys(BarSpecObject).reduce((result, key) => {
         result[key] = Type.Optional({
-          ...BarSchemaObject[key as keyof typeof BarSchemaObject],
+          ...BarSpecObject[key as keyof typeof BarSpecObject],
           conditions: BarConditions,
         });
 
         return result;
-      }, {} as Record<string, any>) as Optional<typeof BarSchemaObject>),
+      }, {} as Record<string, any>) as Optional<typeof BarSpecObject>),
     }),
     {
       title: 'Series',

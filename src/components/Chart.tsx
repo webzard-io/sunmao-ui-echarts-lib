@@ -4,14 +4,14 @@ import { ComponentImpl, implementRuntimeComponent } from '@sunmao-ui/runtime';
 import { css, cx } from '@emotion/css';
 import { Type, Static } from '@sinclair/typebox';
 import { FALLBACK_METADATA, getComponentProps } from '../sunmao-helper';
-import { ChartPropsSchema as BaseChartPropsSchema } from '../generated/types/Chart';
+import { ChartPropsSpec as BaseChartPropsSpec } from '../generated/types/Chart';
 import { useMemo } from 'react';
 import { filterProperties } from '../utils/object';
 
-const ChartPropsSchema = Type.Object({
-  ...BaseChartPropsSchema,
+const ChartPropsSpec = Type.Object({
+  ...BaseChartPropsSpec,
 });
-const ChartStateSchema = Type.Object({});
+const ChartStateSpec = Type.Object({});
 
 export const ChartImpl: ComponentImpl<any> = props => {
   const { elementRef, customStyle, callbackMap } = props;
@@ -78,7 +78,7 @@ export const ChartImpl: ComponentImpl<any> = props => {
   );
 };
 
-const exampleProperties: Static<typeof ChartPropsSchema> = {
+const exampleProperties: Static<typeof ChartPropsSpec> = {
   notMerge: false,
   lazyUpdate: false,
   showLoading: false,
@@ -172,8 +172,8 @@ const options = {
     },
   },
   spec: {
-    properties: ChartPropsSchema,
-    state: ChartStateSchema,
+    properties: ChartPropsSpec,
+    state: ChartStateSpec,
     methods: {},
     slots: [],
     styleSlots: ['wrapper'],

@@ -1,12 +1,12 @@
 import { Type } from '@sinclair/typebox';
-import { BaseChartSchema, SeriesSchema, BarSchemaObject } from './Chart';
+import { BaseChartSpec, SeriesSpec, BarSpecObject } from './Chart';
 
-export const BarPropsSchema = {
-  ...BaseChartSchema,
+export const BarPropsSpec = {
+  ...BaseChartSpec,
   series: Type.Array(
     Type.Object({
-      ...SeriesSchema,
-      ...BarSchemaObject
+      ...SeriesSpec,
+      ...BarSpecObject
     }), {
       title: 'Series',
       category: 'Series',

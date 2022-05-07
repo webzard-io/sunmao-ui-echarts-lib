@@ -2,15 +2,15 @@ import { ChartImpl } from './Chart';
 import { ComponentImpl, implementRuntimeComponent } from '@sunmao-ui/runtime';
 import { Type, Static } from '@sinclair/typebox';
 import { FALLBACK_METADATA } from '../sunmao-helper';
-import { PiePropsSchema as BasePiePropsSchema } from '../generated/types/Pie';
+import { PiePropsSpec as BasePiePropsSpec } from '../generated/types/Pie';
 import { useMemo } from 'react';
 
-const PiePropsSchema = Type.Object({
-  ...BasePiePropsSchema,
+const PiePropsSpec = Type.Object({
+  ...BasePiePropsSpec,
 });
-const PieStateSchema = Type.Object({});
+const PieStateSpec = Type.Object({});
 
-const PieImpl: ComponentImpl<Static<typeof PiePropsSchema>> = (props) => {
+const PieImpl: ComponentImpl<Static<typeof PiePropsSpec>> = (props) => {
   const { series = [] } = props;
   const pieSeries = useMemo<any>(() => series.map(series => ({
     ...series,
@@ -25,7 +25,7 @@ const PieImpl: ComponentImpl<Static<typeof PiePropsSchema>> = (props) => {
   );
 };
 
-const exampleProperties: Static<typeof PiePropsSchema> = {
+const exampleProperties: Static<typeof PiePropsSpec> = {
   notMerge: false,
   lazyUpdate: false,
   showLoading: false,
@@ -85,8 +85,8 @@ const options = {
     },
   },
   spec: {
-    properties: PiePropsSchema,
-    state: PieStateSchema,
+    properties: PiePropsSpec,
+    state: PieStateSpec,
     methods: {},
     slots: [],
     styleSlots: ['wrapper'],
