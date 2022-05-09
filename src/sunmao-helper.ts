@@ -8,7 +8,10 @@ export type IntoStringUnion<T> = {
   [K in keyof T]: T[K] extends string ? TLiteral<T[K]> : never;
 };
 
-export function StringUnion<T extends string[]> (values: [...T], options: Record<string, any>) {
+export function StringUnion<T extends string[]> (
+  values: [...T],
+  options: Record<string, any>
+) {
   return Type.KeyOf(
     Type.Object(
       values.reduce((prev, cur) => {
@@ -51,7 +54,6 @@ export const getComponentProps = <
     data,
     customStyle,
     callbackMap,
-    effects,
     mergeState,
     subscribeMethods,
     /* eslint-enable @typescript-eslint/no-unused-vars */

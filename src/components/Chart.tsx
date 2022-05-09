@@ -4,14 +4,14 @@ import { ComponentImpl, implementRuntimeComponent } from '@sunmao-ui/runtime';
 import { css, cx } from '@emotion/css';
 import { Type, Static } from '@sinclair/typebox';
 import { FALLBACK_METADATA, getComponentProps } from '../sunmao-helper';
-import { ChartPropsSchema as BaseChartPropsSchema } from '../generated/types/Chart';
+import { ChartPropsSpec as BaseChartPropsSpec } from '../generated/types/Chart';
 import { useMemo } from 'react';
 import { filterProperties } from '../utils/object';
 
-const ChartPropsSchema = Type.Object({
-  ...BaseChartPropsSchema,
+const ChartPropsSpec = Type.Object({
+  ...BaseChartPropsSpec,
 });
-const ChartStateSchema = Type.Object({});
+const ChartStateSpec = Type.Object({});
 
 export const ChartImpl: ComponentImpl<any> = props => {
   const { elementRef, customStyle, callbackMap } = props;
@@ -78,7 +78,7 @@ export const ChartImpl: ComponentImpl<any> = props => {
   );
 };
 
-const exampleProperties: Static<typeof ChartPropsSchema> = {
+const exampleProperties: Static<typeof ChartPropsSpec> = {
   notMerge: false,
   lazyUpdate: false,
   showLoading: false,
@@ -100,7 +100,7 @@ const exampleProperties: Static<typeof ChartPropsSchema> = {
     {
       name: '',
       type: 'category',
-      data: [],
+      data: ['Dimension 1', 'Dimension 2'],
       nameLocation: 'center',
       offset: 0,
       position: 'bottom',
@@ -130,7 +130,34 @@ const exampleProperties: Static<typeof ChartPropsSchema> = {
     bottom: '',
   },
   color: [],
-  series: [],
+  series: [
+    {
+      type: 'line',
+      name: 'Series 1',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [1, 2],
+      symbol: 'circle',
+      showSymbol: true,
+      smooth: true,
+    },
+    {
+      type: 'bar',
+      name: 'Series 2',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [1, 2],
+      barWidth: '',
+      barGap: '',
+      barCategoryGap: '',
+      stack: '',
+      showBackground: false,
+    },
+  ],
 };
 
 const options = {
@@ -145,8 +172,8 @@ const options = {
     },
   },
   spec: {
-    properties: ChartPropsSchema,
-    state: ChartStateSchema,
+    properties: ChartPropsSpec,
+    state: ChartStateSpec,
     methods: {},
     slots: [],
     styleSlots: ['wrapper'],

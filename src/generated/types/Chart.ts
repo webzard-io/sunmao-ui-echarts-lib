@@ -1,215 +1,297 @@
-import { Type } from '@sinclair/typebox';
+import { Type, TOptional, TSchema } from '@sinclair/typebox';
 import { StringUnion } from '../../sunmao-helper';
 
-export const TitleSchema = {
+export const TitleSpec = {
   text: Type.String({
-    title: 'Text'
+    title: 'Text',
   }),
   left: Type.String({
-    title: 'Left'
+    title: 'Left',
   }),
   right: Type.String({
-    title: 'Right'
+    title: 'Right',
   }),
   top: Type.String({
-    title: 'Top'
+    title: 'Top',
   }),
   bottom: Type.String({
-    title: 'Bottom'
-  })
+    title: 'Bottom',
+  }),
 };
 
-export const GridSchema = {
+export const GridSpec = {
   left: Type.String({
-    title: 'Left'
+    title: 'Left',
   }),
   right: Type.String({
-    title: 'Right'
+    title: 'Right',
   }),
   top: Type.String({
-    title: 'Top'
+    title: 'Top',
   }),
   bottom: Type.String({
-    title: 'Bottom'
+    title: 'Bottom',
   }),
   containLabel: Type.Boolean({
-    title: 'Should Contain Label'
-  })
+    title: 'Should Contain Label',
+  }),
 };
 
-export const AxisSchema = {
+export const AxisSpec = {
   name: Type.String({
-    title: 'Name'
+    title: 'Name',
   }),
   nameLocation: StringUnion(['end', 'start', 'center'], {
-    title: 'Name Location'
+    title: 'Name Location',
   }),
   type: StringUnion(['value', 'category'], {
-    title: 'Type'
+    title: 'Type',
   }),
   offset: Type.Number({
-    title: 'Offset'
+    title: 'Offset',
   }),
   data: Type.Array(Type.String(), {
-    title: 'Data'
-  })
+    title: 'Data',
+  }),
 };
 
-export const TooltipSchema = {
+export const TooltipSpec = {
   trigger: StringUnion(['axis', 'item', 'none'], {
-    title: 'Trigger'
+    title: 'Trigger',
   }),
   triggerOn: StringUnion(['mousemove', 'click', 'mousemove|click', 'none'], {
-    title: 'Trigger Way'
-  })
+    title: 'Trigger Way',
+  }),
 };
 
-export const LegendSchema = {
+export const LegendSpec = {
   show: Type.Boolean({
-    title: 'Show'
+    title: 'Show',
   }),
   data: Type.Array(Type.String(), {
-    title: 'Data'
+    title: 'Data',
   }),
-  icon: Type.Optional(StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
-    title: 'Icon'
-  })),
+  icon: Type.Optional(
+    StringUnion(
+      ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'],
+      {
+        title: 'Icon',
+      }
+    )
+  ),
   type: StringUnion(['plain', 'scroll'], {
-    title: 'Type'
+    title: 'Type',
   }),
   left: Type.String({
-    title: 'Left'
+    title: 'Left',
   }),
   right: Type.String({
-    title: 'Right'
+    title: 'Right',
   }),
   top: Type.String({
-    title: 'Top'
+    title: 'Top',
   }),
   bottom: Type.String({
-    title: 'Bottom'
-  })
-};
-
-export const SeriesLabelSchema = {
-  show: Type.Boolean(),
-  position: StringUnion([
-    'top',
-    'left',
-    'right',
-    'bottom',
-    'inside',
-    'insideLeft',
-    'insideRight',
-    'insideTop',
-    'insideBottom',
-    'insideTopLeft',
-    'insideBottomLeft',
-    'insideTopRight',
-    'insideBottomRight'
-  ], {
-    title: 'Position'
-  })
-};
-
-export const SeriesSchema = {
-  name: Type.String({
-    title: 'Name'
+    title: 'Bottom',
   }),
-  label: Type.Object(SeriesLabelSchema, {
-    title: 'Label'
+};
+
+export const SeriesLabelSpec = {
+  show: Type.Boolean(),
+  position: StringUnion(
+    [
+      'top',
+      'left',
+      'right',
+      'bottom',
+      'inside',
+      'insideLeft',
+      'insideRight',
+      'insideTop',
+      'insideBottom',
+      'insideTopLeft',
+      'insideBottomLeft',
+      'insideTopRight',
+      'insideBottomRight',
+    ],
+    {
+      title: 'Position',
+    }
+  ),
+};
+
+export const SeriesSpec = {
+  name: Type.String({
+    title: 'Name',
+  }),
+  label: Type.Object(SeriesLabelSpec, {
+    title: 'Label',
   }),
   data: Type.Array(Type.Number(), {
-    title: 'Data'
-  })
+    title: 'Data',
+  }),
 };
 
-export const ComponentPropsSchema = {
+export const ComponentPropsSpec = {
   notMerge: Type.Boolean({
     title: 'Not Merge Option',
-    category: 'Basic'
+    category: 'Basic',
   }),
   lazyUpdate: Type.Boolean({
     title: 'Enable Lazy Update',
-    category: 'Basic'
+    category: 'Basic',
   }),
   showLoading: Type.Boolean({
     title: 'Loading',
-    category: 'Basic'
-  })
+    category: 'Basic',
+  }),
 };
 
-export const BaseChartSchema = {
-  ...ComponentPropsSchema,
-  title: Type.Object(TitleSchema, {
-    category: 'Title'
+export const BaseChartSpec = {
+  ...ComponentPropsSpec,
+  title: Type.Object(TitleSpec, {
+    category: 'Title',
   }),
-  grid: Type.Object(GridSchema, {
-    category: 'Grid'
+  grid: Type.Object(GridSpec, {
+    category: 'Grid',
   }),
-  xAxis: Type.Array(Type.Object({
-    ...AxisSchema,
-    position: StringUnion(['bottom', 'top'], {
-      title: 'Position'
-    })
-  }), {
-    category: 'XAxis'
+  xAxis: Type.Array(
+    Type.Object({
+      ...AxisSpec,
+      position: StringUnion(['bottom', 'top'], {
+        title: 'Position',
+      }),
+    }),
+    {
+      category: 'XAxis',
+    }
+  ),
+  yAxis: Type.Array(
+    Type.Object({
+      ...AxisSpec,
+      position: StringUnion(['left', 'right'], {
+        title: 'Position',
+      }),
+    }),
+    {
+      category: 'YAxis',
+    }
+  ),
+  tooltip: Type.Object(TooltipSpec, {
+    category: 'Tooltip',
   }),
-  yAxis: Type.Array(Type.Object({
-    ...AxisSchema,
-    position: StringUnion(['left', 'right'], {
-      title: 'Position'
-    })
-  }), {
-    category: 'YAxis'
-  }),
-  tooltip: Type.Object(TooltipSchema, {
-    category: 'Tooltip'
-  }),
-  legend: Type.Object(LegendSchema, {
-    category: 'Legend'
+  legend: Type.Object(LegendSpec, {
+    category: 'Legend',
   }),
   color: Type.Array(Type.String(), {
-    category: 'Color'
-  })
+    category: 'Color',
+  }),
 };
 
-export const ChartPropsSchema = {
-  ...BaseChartSchema,
-  series: Type.Array(Type.Object({
-    ...SeriesSchema,
-    // line
-    symbol: StringUnion(['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'], {
-      title: 'Symbol'
+const LineConditions = [
+  {
+    key: 'type',
+    value: 'line',
+  },
+];
+const BarConditions = [
+  {
+    key: 'type',
+    value: 'bar',
+  },
+];
+
+export const LineSpecObject = {
+  symbol: StringUnion(
+    ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'],
+    {
+      title: 'Symbol',
+    }
+  ),
+  showSymbol: Type.Boolean({
+    title: 'Show Symbol',
+  }),
+  smooth: Type.Boolean({
+    title: 'Smooth',
+  }),
+};
+export const BarSpecObject = {
+  stack: Type.String({
+    title: 'Stack',
+  }),
+  barWidth: Type.String({
+    title: 'Bar Width',
+  }),
+  barGap: Type.String({
+    title: 'Bar Gap',
+  }),
+  barCategoryGap: Type.String({
+    title: 'Bar Category Gap',
+  }),
+  showBackground: Type.Boolean({
+    title: 'Show Background',
+  }),
+};
+export const PieSpecObject = {
+  data: Type.Array(
+    Type.Object({
+      value: Type.Number(),
+      name: Type.String(),
     }),
-    showSymbol: Type.Boolean({
-      title: 'Show Symbol'
-    }),
-    smooth: Type.Boolean({
-      title: 'Smooth'
-    }),
-    // bar
-    barWidth: Type.String({
-      title: 'Bar Width'
-    }),
-    barGap: Type.String({
-      title: 'Bar Gap'
-    }),
-    barCategoryGap: Type.String({
-      title: 'Bar Category Gap'
-    }),
-    stack: Type.String({
-      title: 'Stack',
-    }),
-    // pie
-    radius: Type.String({
-      title: 'Radius'
-    }),
-    center: Type.Array(Type.String(), {
-      title: 'Center'
+    {
+      title: 'Data',
+    }
+  ),
+  radius: Type.Optional(
+    Type.Union([Type.Number(), Type.String()], {
+      title: 'Radius',
     })
-  }), {
-    title: 'Series',
-    category: 'Series'
-  })
+  ),
+  center: Type.Optional(
+    Type.Array(Type.Union([Type.Number(), Type.String()]), {
+      title: 'Center',
+    })
+  ),
+};
+
+type Optional<T extends Record<string, TSchema>> = {
+  [P in keyof T]: TOptional<T[P]>;
+};
+
+export const ChartPropsSpec = {
+  ...BaseChartSpec,
+  series: Type.Array(
+    Type.Object({
+      type: StringUnion(['line', 'bar'], {
+        title: 'Type',
+      }),
+      ...SeriesSpec,
+      // line
+      ...(Object.keys(LineSpecObject).reduce((result, key) => {
+        result[key] = Type.Optional({
+          ...LineSpecObject[key as keyof typeof LineSpecObject],
+          conditions: LineConditions,
+        });
+
+        return result;
+      }, {} as Record<string, any>) as Optional<typeof LineSpecObject>),
+      // bar
+      ...(Object.keys(BarSpecObject).reduce((result, key) => {
+        result[key] = Type.Optional({
+          ...BarSpecObject[key as keyof typeof BarSpecObject],
+          conditions: BarConditions,
+        });
+
+        return result;
+      }, {} as Record<string, any>) as Optional<typeof BarSpecObject>),
+    }),
+    {
+      title: 'Series',
+      category: 'Series',
+      widget: 'core/v1/array',
+      widgetOptions: {
+        displayedKeys: ['name'],
+      },
+    }
+  ),
 };

@@ -2,14 +2,14 @@ import { ChartImpl } from './Chart';
 import { ComponentImpl, implementRuntimeComponent } from '@sunmao-ui/runtime';
 import { Type, Static } from '@sinclair/typebox';
 import { FALLBACK_METADATA } from '../sunmao-helper';
-import { BarPropsSchema as BaseBarPropsSchema } from '../generated/types/Bar';
+import { BarPropsSpec as BaseBarPropsSpec } from '../generated/types/Bar';
 
-const BarPropsSchema = Type.Object({
-  ...BaseBarPropsSchema,
+const BarPropsSpec = Type.Object({
+  ...BaseBarPropsSpec,
 });
-const BarStateSchema = Type.Object({});
+const BarStateSpec = Type.Object({});
 
-const BarImpl: ComponentImpl<Static<typeof BarPropsSchema>> = (props) => {
+const BarImpl: ComponentImpl<Static<typeof BarPropsSpec>> = (props) => {
   const { series = [] } = props;
   const barSeries = series.map(series => ({
     ...series,
@@ -24,7 +24,7 @@ const BarImpl: ComponentImpl<Static<typeof BarPropsSchema>> = (props) => {
   );
 };
 
-const exampleProperties: Static<typeof BarPropsSchema> = {
+const exampleProperties: Static<typeof BarPropsSpec> = {
   notMerge: false,
   lazyUpdate: false,
   showLoading: false,
@@ -117,8 +117,8 @@ const options = {
     },
   },
   spec: {
-    properties: BarPropsSchema,
-    state: BarStateSchema,
+    properties: BarPropsSpec,
+    state: BarStateSpec,
     methods: {},
     slots: [],
     styleSlots: ['wrapper'],

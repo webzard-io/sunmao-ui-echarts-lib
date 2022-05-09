@@ -2,15 +2,15 @@ import { ChartImpl } from './Chart';
 import { ComponentImpl, implementRuntimeComponent } from '@sunmao-ui/runtime';
 import { Type, Static } from '@sinclair/typebox';
 import { FALLBACK_METADATA } from '../sunmao-helper';
-import { LinePropsSchema as BaseLinePropsSchema } from '../generated/types/Line';
+import { LinePropsSpec as BaseLinePropsSpec } from '../generated/types/Line';
 import { useMemo } from 'react';
 
-const LinePropsSchema = Type.Object({
-  ...BaseLinePropsSchema,
+const LinePropsSpec = Type.Object({
+  ...BaseLinePropsSpec,
 });
-const LineStateSchema = Type.Object({});
+const LineStateSpec = Type.Object({});
 
-const LineImpl: ComponentImpl<Static<typeof LinePropsSchema>> = (props) => {
+const LineImpl: ComponentImpl<Static<typeof LinePropsSpec>> = (props) => {
   const { series = [] } = props;
   const lineSeries = useMemo(() => series.map(series => ({
     ...series,
@@ -25,7 +25,7 @@ const LineImpl: ComponentImpl<Static<typeof LinePropsSchema>> = (props) => {
   );
 };
 
-const exampleProperties: Static<typeof LinePropsSchema> = {
+const exampleProperties: Static<typeof LinePropsSpec> = {
   notMerge: false,
   lazyUpdate: false,
   showLoading: false,
@@ -108,8 +108,8 @@ const options = {
     },
   },
   spec: {
-    properties: LinePropsSchema,
-    state: LineStateSchema,
+    properties: LinePropsSpec,
+    state: LineStateSpec,
     methods: {},
     slots: [],
     styleSlots: ['wrapper'],

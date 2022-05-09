@@ -1,46 +1,45 @@
 import { Type } from '@sinclair/typebox';
 import {
-  TitleSchema,
-  GridSchema,
-  TooltipSchema,
-  LegendSchema,
-  SeriesSchema,
-  ComponentPropsSchema,
+  TitleSpec,
+  GridSpec,
+  TooltipSpec,
+  LegendSpec,
+  SeriesSpec,
+  ComponentPropsSpec,
+  PieSpecObject,
 } from './Chart';
 
-export const PiePropsSchema = {
-  ...ComponentPropsSchema,
-  title: Type.Object(TitleSchema, {
+export const PiePropsSpec = {
+  ...ComponentPropsSpec,
+  title: Type.Object(TitleSpec, {
     category: 'Title',
   }),
-  grid: Type.Object(GridSchema, {
+  grid: Type.Object(GridSpec, {
     category: 'Grid',
   }),
-  tooltip: Type.Object(TooltipSchema, {
+  tooltip: Type.Object(TooltipSpec, {
     category: 'Tooltip',
   }),
-  legend: Type.Object(LegendSchema, {
+  legend: Type.Object(LegendSpec, {
     category: 'Legend',
   }),
-  color: Type.Optional(Type.Array(Type.String(), {
-    category: 'Color',
-  })),
-  series: Type.Array(Type.Object({
-    ...SeriesSchema,
-    data: Type.Array(Type.Object({
-      value: Type.Number(),
-      name: Type.String()
-    }), {
-      title: 'Data'
+  color: Type.Optional(
+    Type.Array(Type.String(), {
+      category: 'Color',
+    })
+  ),
+  series: Type.Array(
+    Type.Object({
+      ...SeriesSpec,
+      ...PieSpecObject,
     }),
-    radius: Type.Optional(Type.Union([Type.Number(), Type.String()], {
-      title: 'Radius'
-    })),
-    center: Type.Optional(Type.Array(Type.Union([Type.Number(), Type.String()]), {
-      title: 'Center'
-    }))
-  }), {
-    title: 'Series',
-    category: 'Series'
-  })
+    {
+      title: 'Series',
+      category: 'Series',
+      widget: 'core/v1/array',
+      widgetOptions: {
+        displayedKeys: ['name'],
+      },
+    }
+  ),
 };
