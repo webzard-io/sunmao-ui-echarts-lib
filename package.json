@@ -1,6 +1,6 @@
 {
   "name": "@sunmao-ui/echarts-lib",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/webzard-io/sunmao-ui-echarts-lib",
   "license": "MIT",
   "publishConfig": {
@@ -34,8 +34,8 @@
     "@emotion/css": "^11.5.0",
     "@sinclair/typebox": "^0.21.2",
     "@sunmao-ui/core": "^0.5.6",
-    "@sunmao-ui/runtime": "^0.5.8",
     "@sunmao-ui/editor-sdk": "^0.1.10",
+    "@sunmao-ui/runtime": "^0.5.8",
     "echarts": "^5.2.2",
     "echarts-for-react": "^3.0.2",
     "eslint-plugin-react-hooks": "^4.3.0",
