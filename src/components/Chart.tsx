@@ -1,12 +1,11 @@
-import ReactEChartsCore from 'echarts-for-react/lib/core';
-import * as echarts from 'echarts/core';
+import { lazy, Suspense, useMemo } from 'react';
 import { ComponentImpl, implementRuntimeComponent } from '@sunmao-ui/runtime';
 import { css, cx } from '@emotion/css';
 import { Type, Static } from '@sinclair/typebox';
 import { FALLBACK_METADATA, getComponentProps } from '../sunmao-helper';
 import { ChartPropsSpec as BaseChartPropsSpec } from '../generated/types/Chart';
-import { useMemo } from 'react';
 import { filterProperties } from '../utils/object';
+import { echartsInstance, initEchartsInstance } from './echartsInstance';
 
 const ChartPropsSpec = Type.Object({
   ...BaseChartPropsSpec,
@@ -27,6 +26,7 @@ export const ChartImpl: ComponentImpl<any> = props => {
     series,
     ...cProps
   } = getComponentProps(props);
+
   const option = useMemo(() => {
     return filterProperties(
       {
@@ -65,15 +65,24 @@ export const ChartImpl: ComponentImpl<any> = props => {
     click: onClick,
   };
 
+  const ReactEChartsCore = lazy(async () => {
+    if (!echartsInstance) {
+      await initEchartsInstance();
+    }
+    return import('echarts-for-react');
+  });
+
   return (
     <div ref={elementRef}>
-      <ReactEChartsCore
-        {...cProps}
-        className={cx(className, css(customStyle?.wrapper))}
-        echarts={echarts}
-        onEvents={events}
-        option={option}
-      />
+      <Suspense fallback={'Loading echarts'}>
+        <ReactEChartsCore
+          {...cProps}
+          className={cx(className, css(customStyle?.wrapper))}
+          echarts={echartsInstance}
+          onEvents={events}
+          option={option}
+        />
+      </Suspense>
     </div>
   );
 };
