@@ -175,7 +175,7 @@ const options = {
     properties: ChartPropsSpec,
     state: ChartStateSpec,
     methods: {},
-    slots: [],
+    slots: {},
     styleSlots: ['wrapper'],
     events: ['onClick'],
   },

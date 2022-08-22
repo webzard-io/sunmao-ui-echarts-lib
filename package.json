@@ -18,24 +18,23 @@
     "dist",
     "lib"
   ],
-  "build": "tsup src/index.ts --format cjs,esm,iife --legacy-output --inject ./react-import.js --clean --no-splitting --sourcemap",
   "scripts": {
     "dev": "vite",
     "typings": "tsc --emitDeclarationOnly",
-    "build": "tsup src/index.ts --format cjs,esm,iife --legacy-output --inject ./react-import.js --clean --no-splitting --sourcemap",
+    "build": "tsup && npm run visualize",
     "serve": "vite preview",
     "lk": "yarn link @sunmao-ui/runtime @sunmao-ui/editor @sunmao-ui/core",
     "unlk": "yarn unlink @sunmao-ui/runtime @sunmao-ui/editor @sunmao-ui/core",
     "lint": "eslint ./src --ext .ts --ext .tsx",
     "fix-lint": "eslint --fix ./src --ext .ts --ext .tsx",
-    "prepublish": "npm run build && npm run typings"
+    "prepublish": "npm run build && npm run typings",
+    "visualize": "esbuild-visualizer --metadata ./dist/metafile-iife.json --exclude *.png"
   },
   "dependencies": {
     "@emotion/css": "^11.5.0",
     "@sinclair/typebox": "^0.21.2",
-    "@sunmao-ui/core": "^0.5.6",
-    "@sunmao-ui/editor-sdk": "^0.1.10",
-    "@sunmao-ui/runtime": "^0.5.8",
+    "@sunmao-ui/core": "^0.7.3",
+    "@sunmao-ui/runtime": "^0.7.3",
     "echarts": "^5.2.2",
     "echarts-for-react": "^3.0.2",
     "eslint-plugin-react-hooks": "^4.3.0",
@@ -44,12 +43,13 @@
   },
   "devDependencies": {
     "@arco-design/web-react": "^2.28.2",
-    "@sunmao-ui/editor": "^0.5.10",
+    "@sunmao-ui/editor": "^0.7.4",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
-    "@vitejs/plugin-react": "^1.0.0",
+    "@vitejs/plugin-react": "^2.0.1",
+    "esbuild-visualizer": "^0.3.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
@@ -59,9 +59,9 @@
     "eslint-plugin-react": "^7.25.1",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
-    "tsup": "^5.11.11",
+    "tsup": "^6.2.2",
     "typescript": "^4.3.2",
-    "vite": "^2.6.4"
+    "vite": "^3.0.9"
   },
   "husky": {
     "hooks": {
