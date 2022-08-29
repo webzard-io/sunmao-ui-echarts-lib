@@ -10,19 +10,18 @@ const PiePropsSpec = Type.Object({
 });
 const PieStateSpec = Type.Object({});
 
-const PieImpl: ComponentImpl<Static<typeof PiePropsSpec>> = (props) => {
+const PieImpl: ComponentImpl<Static<typeof PiePropsSpec>> = props => {
   const { series = [] } = props;
-  const pieSeries = useMemo<any>(() => series.map(series => ({
-    ...series,
-    type: 'pie'
-  })), [series]);
-
-  return (
-    <ChartImpl
-      {...props}
-      series={pieSeries}
-     />
+  const pieSeries = useMemo<any>(
+    () =>
+      series.map(series => ({
+        ...series,
+        type: 'pie',
+      })),
+    [series]
   );
+
+  return <ChartImpl {...props} series={pieSeries} />;
 };
 
 const exampleProperties: Static<typeof PiePropsSpec> = {
@@ -41,7 +40,7 @@ const exampleProperties: Static<typeof PiePropsSpec> = {
     right: '',
     top: '',
     bottom: '',
-    containLabel: true
+    containLabel: true,
   },
   tooltip: {
     trigger: 'item',
@@ -57,20 +56,25 @@ const exampleProperties: Static<typeof PiePropsSpec> = {
     bottom: '',
   },
   color: [],
-  series: [{
-    name: 'Series 1',
-    label: {
-      show: false,
-      position: 'inside',
+  series: [
+    {
+      name: 'Series 1',
+      label: {
+        show: false,
+        position: 'inside',
+      },
+      data: [
+        {
+          name: 'A',
+          value: 1,
+        },
+        {
+          name: 'B',
+          value: 2,
+        },
+      ],
     },
-    data: [{
-      name: 'A',
-      value: 1,
-    }, {
-      name: 'B',
-      value: 2
-    }]
-  }]
+  ],
 };
 
 const options = {
@@ -88,10 +92,10 @@ const options = {
     properties: PiePropsSpec,
     state: PieStateSpec,
     methods: {},
-    slots: [],
+    slots: {},
     styleSlots: ['wrapper'],
-    events: ['onClick']
-  }
+    events: ['onClick'],
+  },
 };
 
 export const Pie = implementRuntimeComponent(options)(PieImpl);

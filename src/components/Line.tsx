@@ -10,19 +10,18 @@ const LinePropsSpec = Type.Object({
 });
 const LineStateSpec = Type.Object({});
 
-const LineImpl: ComponentImpl<Static<typeof LinePropsSpec>> = (props) => {
+const LineImpl: ComponentImpl<Static<typeof LinePropsSpec>> = props => {
   const { series = [] } = props;
-  const lineSeries = useMemo(() => series.map(series => ({
-    ...series,
-    type: 'line'
-  })), [series]);
-
-  return (
-    <ChartImpl
-      {...props}
-      series={lineSeries}
-     />
+  const lineSeries = useMemo(
+    () =>
+      series.map(series => ({
+        ...series,
+        type: 'line',
+      })),
+    [series]
   );
+
+  return <ChartImpl {...props} series={lineSeries} />;
 };
 
 const exampleProperties: Static<typeof LinePropsSpec> = {
@@ -41,27 +40,31 @@ const exampleProperties: Static<typeof LinePropsSpec> = {
     right: '',
     top: '',
     bottom: '',
-    containLabel: true
+    containLabel: true,
   },
-  xAxis: [{
-    name: '',
-    type: 'category',
-    data: ['Dimension 1', 'Dimension 2'],
-    nameLocation: 'center',
-    offset: 0,
-    position: 'bottom'
-  }],
-  yAxis: [{
-    name: '',
-    type: 'value',
-    data: [],
-    nameLocation: 'center',
-    offset: 0,
-    position: 'left'
-  }],
+  xAxis: [
+    {
+      name: '',
+      type: 'category',
+      data: ['Dimension 1', 'Dimension 2'],
+      nameLocation: 'center',
+      offset: 0,
+      position: 'bottom',
+    },
+  ],
+  yAxis: [
+    {
+      name: '',
+      type: 'value',
+      data: [],
+      nameLocation: 'center',
+      offset: 0,
+      position: 'left',
+    },
+  ],
   tooltip: {
     trigger: 'axis',
-    triggerOn: 'mousemove'
+    triggerOn: 'mousemove',
   },
   legend: {
     show: true,
@@ -73,27 +76,30 @@ const exampleProperties: Static<typeof LinePropsSpec> = {
     bottom: '',
   },
   color: [],
-  series: [{
-    name: 'Series 1',
-    label: {
-      show: false,
-      position: 'top',
+  series: [
+    {
+      name: 'Series 1',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [1, 2],
+      symbol: 'circle',
+      showSymbol: true,
+      smooth: true,
     },
-    data: [1, 2],
-    symbol: 'circle',
-    showSymbol: true,
-    smooth: true
-  }, {
-    name: 'Series 2',
-    label: {
-      show: false,
-      position: 'top',
+    {
+      name: 'Series 2',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [3, 4],
+      symbol: 'circle',
+      showSymbol: true,
+      smooth: true,
     },
-    data: [3, 4],
-    symbol: 'circle',
-    showSymbol: true,
-    smooth: true
-  }]
+  ],
 };
 
 const options = {
@@ -111,10 +117,10 @@ const options = {
     properties: LinePropsSpec,
     state: LineStateSpec,
     methods: {},
-    slots: [],
+    slots: {},
     styleSlots: ['wrapper'],
-    events: ['onClick']
-  }
+    events: ['onClick'],
+  },
 };
 
 export const Line = implementRuntimeComponent(options)(LineImpl);

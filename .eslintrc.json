@@ -41,7 +41,6 @@
     "react/jsx-equals-spacing": ["error", "never"],
     "react/jsx-wrap-multilines": ["error"],
     "react/jsx-tag-spacing": ["error"],
-    "react/jsx-max-props-per-line": ["error"],
     "react/jsx-sort-props": ["warn"]
   },
   "ignorePatterns": ["node_modules", "*.d.ts", "*.js", "package.json", "*.html"]

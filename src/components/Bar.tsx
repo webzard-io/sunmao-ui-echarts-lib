@@ -9,19 +9,14 @@ const BarPropsSpec = Type.Object({
 });
 const BarStateSpec = Type.Object({});
 
-const BarImpl: ComponentImpl<Static<typeof BarPropsSpec>> = (props) => {
+const BarImpl: ComponentImpl<Static<typeof BarPropsSpec>> = props => {
   const { series = [] } = props;
   const barSeries = series.map(series => ({
     ...series,
-    type: 'bar'
+    type: 'bar',
   }));
 
-  return (
-    <ChartImpl
-      {...props}
-      series={barSeries}
-     />
-  );
+  return <ChartImpl {...props} series={barSeries} />;
 };
 
 const exampleProperties: Static<typeof BarPropsSpec> = {
@@ -40,27 +35,31 @@ const exampleProperties: Static<typeof BarPropsSpec> = {
     right: '',
     top: '',
     bottom: '',
-    containLabel: true
+    containLabel: true,
   },
-  xAxis: [{
-    name: '',
-    type: 'category',
-    data: ['Dimension 1', 'Dimension 2'],
-    nameLocation: 'center',
-    offset: 0,
-    position: 'bottom'
-  }],
-  yAxis: [{
-    name: '',
-    type: 'value',
-    data: [],
-    nameLocation: 'center',
-    offset: 0,
-    position: 'left'
-  }],
+  xAxis: [
+    {
+      name: '',
+      type: 'category',
+      data: ['Dimension 1', 'Dimension 2'],
+      nameLocation: 'center',
+      offset: 0,
+      position: 'bottom',
+    },
+  ],
+  yAxis: [
+    {
+      name: '',
+      type: 'value',
+      data: [],
+      nameLocation: 'center',
+      offset: 0,
+      position: 'left',
+    },
+  ],
   tooltip: {
     trigger: 'axis',
-    triggerOn: 'mousemove'
+    triggerOn: 'mousemove',
   },
   legend: {
     show: true,
@@ -72,37 +71,34 @@ const exampleProperties: Static<typeof BarPropsSpec> = {
     bottom: '',
   },
   color: [],
-  series: [{
-    name: 'Series 1',
-    label: {
-      show: false,
-      position: 'top'
+  series: [
+    {
+      name: 'Series 1',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [1, 2],
+      barWidth: '',
+      barGap: '',
+      barCategoryGap: '',
+      stack: '',
+      showBackground: false,
     },
-    data: [
-      1,
-      2
-    ],
-    barWidth: '',
-    barGap: '',
-    barCategoryGap: '',
-    stack: '',
-    showBackground: false,
-  }, {
-    name: 'Series 2',
-    label: {
-      show: false,
-      position: 'top'
+    {
+      name: 'Series 2',
+      label: {
+        show: false,
+        position: 'top',
+      },
+      data: [3, 4],
+      barWidth: '',
+      barGap: '',
+      barCategoryGap: '',
+      stack: '',
+      showBackground: false,
     },
-    data: [
-      3,
-      4
-    ],
-    barWidth: '',
-    barGap: '',
-    barCategoryGap: '',
-    stack: '',
-    showBackground: false,
-  }]
+  ],
 };
 
 const options = {
@@ -120,10 +116,10 @@ const options = {
     properties: BarPropsSpec,
     state: BarStateSpec,
     methods: {},
-    slots: [],
+    slots: {},
     styleSlots: ['wrapper'],
-    events: ['onClick']
-  }
+    events: ['onClick'],
+  },
 };
 
 export const Bar = implementRuntimeComponent(options)(BarImpl);

@@ -3,12 +3,13 @@
 import { ComponentMetadata } from '@sunmao-ui/core/lib/metadata';
 import { ComponentImplProps } from '@sunmao-ui/runtime';
 import { TLiteral, Type } from '@sinclair/typebox';
+import { SlotSpec } from '@sunmao-ui/core';
 
 export type IntoStringUnion<T> = {
   [K in keyof T]: T[K] extends string ? TLiteral<T[K]> : never;
 };
 
-export function StringUnion<T extends string[]> (
+export function StringUnion<T extends string[]>(
   values: [...T],
   options: Record<string, any>
 ) {
@@ -27,22 +28,19 @@ export const FALLBACK_METADATA: ComponentMetadata = {
   name: '',
   description: '',
   displayName: '',
-  isDraggable: true,
-  isResizable: true,
   exampleProperties: {},
-  exampleSize: [1, 1],
 };
 
 export const getComponentProps = <
-  T,
+  T extends Record<string, unknown>,
   TState,
   TMethods,
-  KSlot extends string,
+  TSlots extends Record<string, SlotSpec>,
   KStyleSlot extends string,
   KEvent extends string
 >(
-    props: T & ComponentImplProps<TState, TMethods, KSlot, KStyleSlot, KEvent>
-  ): T => {
+  props: T & ComponentImplProps<T, TState, TMethods, TSlots, KStyleSlot, KEvent>
+) => {
   const {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     component,
@@ -50,14 +48,20 @@ export const getComponentProps = <
     childrenMap,
     services,
     app,
-    gridCallbacks,
-    data,
     customStyle,
     callbackMap,
     mergeState,
     subscribeMethods,
+    getElement,
+    elementRef,
+    hooks,
+    isInModule,
+    isInEditor,
+    componentDidMount,
+    componentDidUnmount,
+    componentDidUpdate,
     /* eslint-enable @typescript-eslint/no-unused-vars */
     ...rest
   } = props;
-  return rest as unknown as T;
+  return rest;
 };
